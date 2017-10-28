@@ -16,7 +16,8 @@
       basekey = (int process.env.MIDI_BASEKEY) ? 64
       note_off = process.env.MIDI_NOTEOFF not in ['false']
 
-      output.openVirtualPort 'Firmata'
+      serial = process.env.FIRMATA_SERIAL ? '/dev/ttyUSB0'
+      output.openVirtualPort "Firmata #{serial}"
 
 MIDI specs, see https://www.midi.org/specifications/item/table-1-summary-of-midi-message
 
