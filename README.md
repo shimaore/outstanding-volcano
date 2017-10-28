@@ -1,0 +1,2 @@
+- Install the `StandardFirmata` firmware using the Arduino IDE.
+- `npm install`, `npm start`
