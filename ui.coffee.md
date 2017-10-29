@@ -35,7 +35,7 @@ and load the index.html of the app.
 
 Open the DevTools.
 
-        mainWindow.webContents.openDevTools()
+        mainWindow.webContents.openDevTools() if process.env.DEV_TOOLS
 
 Emitted when the window is closed.
 
@@ -52,13 +52,10 @@ Receive events from renderers on the `events` bus, and forward them onto the `w`
 
         y =
           on: (event,cb) ->
-            ipcMain.on event, (e,message) ->
-              debug "renderer → on #{event}", e, message
-              cb message
-          emit: (event,message) ->
-            debug "emit #{event} → renderer", message
-            mainWindow.webContents.send event, message
-            debug "emitted #{event} → renderer", message
+            ipcMain.on event, (e,args...) ->
+              cb args...
+          emit: (event,args...) ->
+            mainWindow.webContents.send event, args...
 
         w.emit 'ready', mainWindow, y
         return

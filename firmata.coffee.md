@@ -2,6 +2,11 @@
     {debug,hand} = (require 'tangible') 'outstanding-volcano:firmata'
     Board = require 'firmata'
 
+    fs = require 'fs'
+    {join} = require 'path'
+
+    DEVICE_PATH = process.env.DEVICE_PATH ? '/dev'
+
     sleep = (timeout) ->
       new Promise (resolve) -> setTimeout resolve, timeout
 
@@ -11,17 +16,44 @@ Connect to the Firmata device
 This is currently hard-coded for an Arduino Nano.
 
     module.exports = (w) ->
-      w.on 'connect', (serial) ->
-        connect serial, w
 
-    connect = (serial,w) ->
+      w.on 'connect', (device) ->
+        connect device, w
+
+      w.on 'get-available-ports', ->
+        fs.readdir DEVICE_PATH, (error,files) ->
+          debug "readdir #{DEVICE_PATH}", error
+          if err?
+            w.emit 'error', "readdir #{DEVICE_PATH}: #{error}"
+            return
+          unless files?
+            w.emit 'available_ports', []
+            return
+          available_ports = files
+            .filter (x) -> x.match /^ttyUSB/
+            .map (x) -> join DEVICE_PATH, x
+          debug 'available-ports', available_ports
+          w.emit 'available-ports', available_ports
+
+    boards = {}
+    digital_pins = {}
+
+    connect = (device,w) ->
       led = 13
 
-      board = new Board serial
+      if device of boards
+        if digital_pins[device]
+          w.emit 'digital-pins', device, digital_pins[device]
+        return boards[device]
+
+      board = new Board device
+      boards[device] = board
+
       board.on 'error', (error) ->
-        w.emit 'error', error
+        w.emit 'error', "Device #{device}: #{error}"
 
       board.on 'ready', ->
+        debug 'Board ready', device
         board.digitalWrite led, board.HIGH
 
         digital_pins = []
@@ -32,7 +64,9 @@ This is currently hard-coded for an Arduino Nano.
           board.pinMode pin, board.MODES.PULLUP
           board.reportDigitalPin pin, 1
 
-        w.emit 'digital_pins', digital_pins
+        digital_pins[device] = digital_pins
+        debug 'digital-pins', device, digital_pins
+        w.emit 'digital-pins', device, digital_pins
         return
 
       debouncing = {}
@@ -68,3 +102,5 @@ We debounce with prompt detection (name is from https://github.com/thomasfrederi
         w.emit 'changed', {pin,value:is_on}
         w.emit "changed-#{pin}", is_on
         return
+
+      return

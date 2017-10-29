@@ -5,14 +5,12 @@
     <title>Firmata!</title>
   </head>
   <body>
-    <h1>Firmata!</h1>
-
     <div class="main">
     </div>
 
     <script>
       const y = require('./renderer.js')
-      require('./client-bundle.js')(y)
+      require('./client-bundle.js')(y,require('electron'))
     </script>
     <address>
     Node.js <script>document.write(process.versions.node)</script>,
