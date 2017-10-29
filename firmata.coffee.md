@@ -11,11 +11,16 @@ Connect to the Firmata device
 This is currently hard-coded for an Arduino Nano.
 
     module.exports = (w) ->
+      w.on 'connect', (serial) ->
+        connect serial, w
+
+    connect = (serial,w) ->
       led = 13
-      digital_pins = [2..13]
-      serial = process.env.FIRMATA_SERIAL ? '/dev/ttyUSB0'
 
       board = new Board serial
+      board.on 'error', (error) ->
+        w.emit 'error', error
+
       board.on 'ready', ->
         board.digitalWrite led, board.HIGH
 
@@ -27,7 +32,7 @@ This is currently hard-coded for an Arduino Nano.
           board.pinMode pin, board.MODES.PULLUP
           board.reportDigitalPin pin, 1
 
-        # debug 'ready, digital_pins', digital_pins
+        w.emit 'digital_pins', digital_pins
         return
 
       debouncing = {}

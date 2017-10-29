@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Firmata!</title>
+  </head>
+  <body>
+    <h1>Firmata!</h1>
+
+    <div class="main">
+    </div>
+
+    <script>
+      const y = require('./renderer.js')
+      require('./client-bundle.js')(y)
+    </script>
+    <address>
+    Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    Electron <script>document.write(process.versions.electron)</script>.
+    </address>
+  </body>
+</html>

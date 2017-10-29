@@ -2,22 +2,27 @@
   "name": "outstanding-volcano",
   "version": "1.0.0",
   "description": "- Install the `StandardFirmata` firmware using the Arduino IDE.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "prepublish": "coffee -c *.coffee.md",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "coffee server.coffee.md"
+    "prepublish": "coffee -c *.coffee.md && webpack",
+    "postinstall": "electron-rebuild -f -w firmata,midi",
+    "prestart": "npm install && npm run prepublish",
+    "start": "electron ."
   },
   "author": "Stéphane Alnet <stephane@shimaore.net> (https://stephane.shimaore.net/)",
   "license": "Unlicense",
   "dependencies": {
+    "electron-rebuild": "^1.6.0",
     "firmata": "^0.17.0",
     "midi": "^0.9.5",
     "seem": "^2.0.0",
     "tangible": "^1.9.0"
   },
   "devDependencies": {
-    "coffee-script": "^1.12.7"
+    "coffeescript": "^1.12.7",
+    "component-dom": "^1.0.8",
+    "electron": "^1.7.9",
+    "webpack": "^3.8.1"
   },
   "private": "shimaore"
 }
