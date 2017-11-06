@@ -7,7 +7,7 @@
     "prepublish": "coffee -c *.coffee.md && webpack",
     "postinstall": "electron-rebuild -f -w firmata,midi",
     "prestart": "npm install && npm run prepublish",
-    "start": "electron ."
+    "start": "DEBUG='*' electron ."
   },
   "author": "Stéphane Alnet <stephane@shimaore.net> (https://stephane.shimaore.net/)",
   "license": "Unlicense",

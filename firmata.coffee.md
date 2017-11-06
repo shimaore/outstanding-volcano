@@ -19,6 +19,7 @@ This is currently hard-coded for an Arduino Nano.
 
       w.on 'connect', (device) ->
         connect device, w
+        w.on 'error', -> connect device, w
 
       w.on 'get-available-ports', ->
         fs.readdir DEVICE_PATH, (error,files) ->
@@ -56,17 +57,17 @@ This is currently hard-coded for an Arduino Nano.
         debug 'Board ready', device
         board.digitalWrite led, board.HIGH
 
-        digital_pins = []
+        my_pins = []
         for pin, number in board.pins when board.MODES.OUTPUT in pin.supportedModes and board.MODES.PULLUP in pin.supportedModes
-          digital_pins.push number
+          my_pins.push number
 
-        for pin in digital_pins
+        for pin in my_pins
           board.pinMode pin, board.MODES.PULLUP
           board.reportDigitalPin pin, 1
 
-        digital_pins[device] = digital_pins
-        debug 'digital-pins', device, digital_pins
-        w.emit 'digital-pins', device, digital_pins
+        digital_pins[device] = my_pins
+        debug 'digital-pins', device, my_pins
+        w.emit 'digital-pins', device, my_pins
         return
 
       debouncing = {}
@@ -99,8 +100,7 @@ We got a valid change event while we were not debouncing a previous event.
 
 We debounce with prompt detection (name is from https://github.com/thomasfredericks/Bounce2/blob/master/Bounce2.cpp#L61).
 
-        w.emit 'changed', {pin,value:is_on}
-        w.emit "changed-#{pin}", is_on
+        w.emit 'changed', {device,pin,value:is_on}
         return
 
-      return
+      return board
