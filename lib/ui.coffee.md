@@ -4,7 +4,7 @@ Module to control application life.
 Module to create native browser window.
 
     {app,BrowserWindow,ipcMain} = electron = require 'electron'
-    {debug} = (require 'tangible') 'outstanding-volcano:ui'
+    {debug} = (require 'tangible') 'daffy-neck:ui'
 
     path = require 'path'
     url = require 'url'

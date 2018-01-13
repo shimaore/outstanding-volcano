@@ -1,6 +1,6 @@
 Client: the webpack-compiled module that runs inside the Renderer.
 
-    {debug} = (require 'tangible') 'outstanding-volcano:renderer'
+    {debug} = (require 'tangible') 'outstanding-volcano:client'
     $ = dom = require 'component-dom'
 
     module.exports = (y,electron) ->

@@ -4,25 +4,25 @@
   "description": "- Install the `StandardFirmata` firmware using the Arduino IDE.",
   "main": "server.js",
   "scripts": {
-    "prepublish": "coffee -c *.coffee.md && webpack",
+    "prepublish": "coffee -c *.coffee.md lib/*.coffee.md && webpack",
     "postinstall": "electron-rebuild -f -w firmata,midi",
     "prestart": "npm install && npm run prepublish",
-    "start": "DEBUG='*' electron ."
+    "start": "electron ."
   },
   "author": "Stéphane Alnet <stephane@shimaore.net> (https://stephane.shimaore.net/)",
   "license": "Unlicense",
   "dependencies": {
-    "electron-rebuild": "^1.6.0",
+    "electron-rebuild": "^1.7.3",
     "firmata": "^0.17.0",
     "midi": "^0.9.5",
     "seem": "^2.0.0",
     "tangible": "^1.9.0"
   },
   "devDependencies": {
-    "coffeescript": "^1.12.7",
+    "coffee-script": "^1.12.7",
     "component-dom": "^1.0.8",
-    "electron": "^1.7.9",
-    "webpack": "^3.8.1"
+    "electron": "^1.7.10",
+    "webpack": "^3.10.0"
   },
   "private": "shimaore"
 }
