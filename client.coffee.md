@@ -1,6 +1,6 @@
 Client: the webpack-compiled module that runs inside the Renderer.
 
-    {debug} = (require 'tangible') 'outstanding-volcano:client'
+    {debug} = (require 'tangible') 'client'
     $ = dom = require 'component-dom'
 
     module.exports = (y,electron) ->
@@ -25,9 +25,11 @@ Client: the webpack-compiled module that runs inside the Renderer.
         $ 'div.main'
           .empty()
           .append """
-            <table>
-              <tbody>
+            <table class="table-striped">
+              <thead>
                 <tr><th>Pin</th><th>Channel</th><th>Note</th><th>Velocity</th></tr>
+              </thead>
+              <tbody>
               </tbody>
             </table>
 

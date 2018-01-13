@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Firmata!</title>
+    <link rel="stylesheet" href="./style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="./css/photon.css" type="text/css" media="all" />
+  </head>
+  <body>
+    <div class="window">
+      <div class="window-content main">
+      </div>
+    </div>
+
+    <script>
+      const y = require('./renderer.js')
+      require('../client-bundle.js')(y,require('electron'))
+    </script>
+  </body>
+</html>

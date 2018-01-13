@@ -3,5 +3,5 @@
       output:
         path: __dirname
         filename: 'client-bundle.js'
-        library: 'OutstandingVolcano'
+        library: 'Application'
         libraryTarget: 'umd'

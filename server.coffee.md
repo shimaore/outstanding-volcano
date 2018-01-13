@@ -1,6 +1,6 @@
 Server: the main Node.js process
 
-    {debug} = (require 'tangible') 'outstanding-volcano:server'
+    {debug} = (require 'tangible') 'server'
     EventEmitter = require 'events'
     ui = require './lib/ui'
 

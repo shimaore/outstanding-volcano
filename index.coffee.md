@@ -1,6 +1,6 @@
 Index: the Node.js module that handles interaction between the firmata/midi modules and the UI.
 
-    {debug} = (require 'tangible') 'outstanding-volcano'
+    {debug} = (require 'tangible') 'main'
     {Menu,MenuItem} = require 'electron'
 
     module.exports = main = (w) ->

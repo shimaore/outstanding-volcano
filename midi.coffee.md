@@ -53,7 +53,6 @@ MIDI specs, see https://www.midi.org/specifications/item/table-1-summary-of-midi
         {channel,note,velocity,off_velocity} = map
         if value
           msg = [NOTE_ON+channel-1,note,velocity]
-          output.sendMessage
         else
           if note_off
             msg = [NOTE_OFF+channel-1,note,off_velocity]
